@@ -3,7 +3,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgb(177, 216, 216);
+    /* background: rgb(177, 216, 216); */
 }
 .Frame101390{
     width: 1280px;
@@ -37,9 +37,9 @@ position: absolute;
 .group101395{
 width: 572.71px;
 height: 592px;
-top:-88px;
 gap: 0px;
 position: absolute;
+margin-left: 710px;
 
 }
 .group{
@@ -47,10 +47,11 @@ width: 79.17px;
 height: 79px;
 top: 841px;
 position: absolute;
+margin-left: 1000px;
 }
 .Frame101393{
 display: flex;
-width: 1024px;
+/* width: 1024px; */
 height:700px;
 top: 158px;
 padding: 0px 120px 0px 0px;
@@ -90,7 +91,7 @@ margin-left: 40%;
 width: 38px;
 height: 22px;
 font-family: Plus Jakarta Sans;
-font-size: 14px;
+font-size: 15px;
 font-weight: 500;
 line-height: 22px;
 color: rgba(0, 0, 0, 1);
@@ -106,7 +107,7 @@ border: 0px 0px 1px 0px;
 Width: 56px;
 Height: 22px;
 font-family: Plus Jakarta Sans;
-font-size: 14px;
+font-size: 15px;
 font-weight: 500;
 line-height: 22px;
 color:rgba(0, 0, 0, 1) ;
