@@ -76,18 +76,15 @@ function render() {
         return `
         
             <div class="box"  draggable = "true">
-
             <div class="function">
                     <button onclick="edit(${index}, 'completed')" class="edit"><img src="./img/Edit.png" alt=""></button>
                     <button onclick="deletee(${index}, 'completed')" class="delete"><img src="./img/Delete.png" alt=""></button>
                     <input type="text" class="indexBox" name="" id="">
-
                 </div>
                 <div class="linkBox">${value.link}</div>
                 <div class="titleBox">${value.title}</div>
                 <div class="lineBox"></div>
                 <div class="contentBox">${value.content}</div>
-
                 <div class="timeBox">
                 <img src="./img/clock.png" alt="">
                     <div class="time">${value.formatDate}</div>
@@ -106,7 +103,6 @@ function render() {
         return `
         
             <div class="box" draggable = "true">
-
             <div class="function">
                     <button onclick="edit(${index}, 'blocked')" class="edit"><img src="./img/Edit.png" alt=""></button>
                     <button onclick="deletee(${index}, 'blocked')" class="delete"><img src="./img/Delete.png" alt=""></button>
@@ -117,7 +113,6 @@ function render() {
                 <div class="titleBox">${value.title}</div>
                 <div class="lineBox"></div>
                 <div class="contentBox">${value.content}</div>
-
                 <div class="timeBox">
                 <img src="./img/clock.png" alt="">
                     <div class="time">${value.formatDate}</div>
@@ -143,18 +138,17 @@ let listboxTodo = document.getElementById("listboxTodo");
 let listboxDoing = document.getElementById("listboxDoing");
 let listboxCompleted = document.getElementById("listboxCompleted");
 let listboxBlocked = document.getElementById("listboxBlocked");
-let selected;
+let selected = null;
 for (list of lists) {
     list.addEventListener("dragstart", function (e) {
         console.log("dragstart")
         selected = e.target;
 
-
         //keo tha vao listDoing
         listboxDoing.addEventListener("dragover", function (e) {
 
             e.preventDefault();
-            console.log("dragover")
+            console.log("dragoverDoing")
         });
 
         listboxDoing.addEventListener("drop", function (e) {
@@ -163,6 +157,8 @@ for (list of lists) {
                 listboxDoing.appendChild(selected);
                 console.log(selected)
                 console.log(selected.querySelector(".linkBox").innerText)
+                listDoing = localStorage.getItem("listDoing") ? JSON.parse(localStorage.getItem("listDoing")) : [];
+
 
                 listDoing.push(
                     {
@@ -187,10 +183,13 @@ for (list of lists) {
                 let indexToRemove4 = listBlocked.findIndex(item => item.link === selected.querySelector(".linkBox").innerText);
                 if (indexToRemove4 !== -1) {
                     listBlocked.splice(indexToRemove4, 1);
-                    localStorage.setItem("listDoing", JSON.stringify(listBlocked));
+                    localStorage.setItem("listBlocked", JSON.stringify(listBlocked));
                 }
 
-
+                console.log("ok")
+            }
+            else{
+                console.log("fail")
             }
             selected = null;
             console.log("drop")
@@ -205,9 +204,8 @@ for (list of lists) {
         listboxTodo.addEventListener("dragover", function (e) {
 
             e.preventDefault();
-            console.log("dragover")
+            console.log("dragoverTodo")
         });
-
         listboxTodo.addEventListener("drop", function (e) {
             e.preventDefault();
 
@@ -215,7 +213,7 @@ for (list of lists) {
                 listboxTodo.appendChild(selected);
                 console.log(selected)
                 console.log(selected.querySelector(".linkBox").innerText)
-
+                listTodo = localStorage.getItem("listTodo") ? JSON.parse(localStorage.getItem("listTodo")) : [];
                 listTodo.push(
                     {
                         link: selected.querySelector(".linkBox").innerText,
@@ -239,10 +237,8 @@ for (list of lists) {
                 let indexToRemove4 = listBlocked.findIndex(item => item.link === selected.querySelector(".linkBox").innerText);
                 if (indexToRemove4 !== -1) {
                     listBlocked.splice(indexToRemove4, 1);
-                    localStorage.setItem("listDoing", JSON.stringify(listBlocked));
+                    localStorage.setItem("listBlocked", JSON.stringify(listBlocked));
                 }
-
-
 
             }
             selected = null;
@@ -251,12 +247,11 @@ for (list of lists) {
 
         });
 
-
         //keo tha vao listCompleted
         listboxCompleted.addEventListener("dragover", function (e) {
 
             e.preventDefault();
-            console.log("dragover")
+            console.log("dragoverCompleted")
         });
 
         listboxCompleted.addEventListener("drop", function (e) {
@@ -266,6 +261,7 @@ for (list of lists) {
                 listboxCompleted.appendChild(selected);
                 console.log(selected)
                 console.log(selected.querySelector(".linkBox").innerText)
+                listCompleted = localStorage.getItem("listCompleted") ? JSON.parse(localStorage.getItem("listCompleted")) : [];
 
                 listCompleted.push(
                     {
@@ -308,7 +304,7 @@ for (list of lists) {
         listboxBlocked.addEventListener("dragover", function (e) {
 
             e.preventDefault();
-            console.log("dragover")
+            console.log("dragoverBlocked")
         });
 
         listboxBlocked.addEventListener("drop", function (e) {
@@ -318,7 +314,7 @@ for (list of lists) {
                 listboxBlocked.appendChild(selected);
                 console.log(selected)
                 console.log(selected.querySelector(".linkBox").innerText)
-
+                listBlocked = localStorage.getItem("listBlocked") ? JSON.parse(localStorage.getItem("listBlocked")) : [];
                 listBlocked.push(
                     {
                         link: selected.querySelector(".linkBox").innerText,
@@ -361,7 +357,7 @@ for (list of lists) {
 
     })
 
-    
+
 
 }
 
@@ -374,7 +370,9 @@ function exit() {
     document.getElementById("link").value = "";
     document.getElementById("title").value = "";
     document.getElementById("content").value = "";
-
+    document.getElementById("link").style.border = "1px solid grey";
+    document.getElementById("title").style.border = "1px solid grey";
+    document.getElementById("content").style.border = "1px solid grey";
 }
 
 function newTask() {
@@ -420,6 +418,9 @@ var typeList;
 
 function edit(index, type) {
 
+    document.getElementById("link").style.border = "1px solid green";
+    document.getElementById("title").style.border = "1px solid green";
+    document.getElementById("content").style.border = "1px solid green";
     typeList = type;
     console.log("typeList: ", typeList)
     if (type === 'todo') {
